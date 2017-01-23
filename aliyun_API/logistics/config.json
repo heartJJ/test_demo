@@ -1,0 +1,14 @@
+{
+  "API_1": {
+    "url": "http://jisukdcx.market.alicloudapi.com/express/query",
+    "headers": {
+      "Authorization":"APPCODE ab1df9006c0943a884d824512c7a9d8b"
+    }
+  },
+  "API_2": {
+    "url": "https://ali-deliver.showapi.com/showapi_expInfo",
+    "headers": {
+      "Authorization":"APPCODE ab1df9006c0943a884d824512c7a9d8b"
+    }
+  }
+}

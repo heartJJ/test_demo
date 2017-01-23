@@ -1,0 +1,21 @@
+{
+  "name": "hjj_test_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "cross-env DEBUG=debug ./node_modules/mocha/bin/mocha ./mocha/demo01.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "lodash": "^4.17.2",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "cross-env": "^3.1.4",
+    "moment": "^2.17.1"
+  }
+}
