@@ -37,13 +37,13 @@ const getCodeOfPackage = (code, obj) => {
     if(code.length < 20) {
       obj.error = err.MistakeLengthOfPackageCode;
     }
-    obj.UCC = code.substring(2, 20);
+    obj.code = code.substring(2, 20);
     code = code.substring(20);
   } else if(key === '01' || key === '02') {
     if(code.length < 16) {
       obj.error = err.MistakeLengthOfPackageCode;
     }
-    obj.UCC = code.substring(2, 16);
+    obj.code = code.substring(2, 16);
     code = code.substring(16);
   } else {
     obj.error = err.MistakeLengthOfPackageCode;
@@ -138,20 +138,6 @@ const handleWithoutSpace = (code, obj) => {
   }
 };
 
-
-// module.exports = (tm) => {
-//   const obj = {TM: []};
-//   tm.forEach(val => obj.TM.push(val));
-//   supplementCode(tm, obj);
-//   tm[0] = getCodeOfPackage(tm[0], obj);
-//   tm.forEach(code => {
-//     code = getEnsureLength(code, obj);
-//     if(code.length > 0) {
-//       getUnensureLength(code, obj);
-//     }
-//   }); 
-//   return obj;
-// };
 
 module.exports = (tm) => {
   const obj = {TM: []};

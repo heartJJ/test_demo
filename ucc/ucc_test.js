@@ -1,4 +1,4 @@
-const ucc_parse = require('./ucc_parse'),
+const ucc_parse = require('./ucc_saas'),
   _ = require('lodash');
 
 
@@ -16,7 +16,8 @@ const tm = [
 
 const parseTM = () => {
   tm.forEach(val => {
-    console.log(ucc_parse(val));
+    // console.log(ucc_parse(val));
+    ucc_parse(val);
   });
   //console.log(ucc_parse(tm[3]));
 };

@@ -1,16 +1,18 @@
-const hibc_parse = require('./hibc_parse');
- const moment = require('moment');
-  const _ = require('lodash');
+const hibc_parse = require('./hibc_parse'),
+  moment = require('moment'),
+  _ = require('lodash');
+  hibc_parse_new = require('./hibc');
 
 var barcode = [
   //  '*+H4357142111517*',
   //  '*+$12DM116357C*',
   // '*+$$322041712DM116357R*'
-  //  '+J0146605510316*',
-  //  '+1821282084452LN*'
-  '*+H435713067141E',
-  '*+$16BM07001ED',
-  '*+$$326020616BM07001ES'
+   '+J0146605510316*',
+   '+1821282084452LN*'
+  // '*+H435713067141E',
+  // '*+$16BM07001ED',
+  // '*+$$326020616BM07001ES'
+  //'+J123123451/$$1012311234567L'
  ];
 
 const parseTm = () => {
@@ -31,7 +33,9 @@ const parseTm = () => {
   //   }
   // });
   // console.log(obj);
-  console.log(hibc_parse(barcode));
+ // console.log(hibc_parse(barcode));
+ //hibc_parse(barcode)
+ hibc_parse_new(barcode);
 };
 
 parseTm();

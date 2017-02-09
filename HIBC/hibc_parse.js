@@ -1,24 +1,28 @@
  const _ = require('lodash');
  const moment = require('moment');
+ const debug = require('debug')('debug');
  
  var error = {
-        BarcodeNotAString: 1,
-        EmptyBarcode: 2,
-        BarcodeNotHIBC: 3,
-        InvalidBarcode: 4,
-        InvalidDate: 5,
+        BarcodeNotAString: 1, // 条码非string
+        EmptyBarcode: 2, // 条码为空
+        BarcodeNotHIBC: 3, // 非HIBC条码
+        InvalidBarcode: 4, // 条码格式有误
+        InvalidDate: 5, // 错误的日期格式
         EmptyCheckCharacter: 6,
         EmptyLinkCharacter: 7,
         InvalidQuantity: 8,
-        InvalidLine1: 9
+        InvalidLine1: 9 // 主码长度不符合要求
     };
 
     var type = {
-        Concatenated: 1,
-        Line1: 2,
-        Line2: 3
+        Concatenated: 1, // 主副码一起，以 '/'分隔
+        Line1: 2, // 主码
+        Line2: 3 // 副码
     };
 
+    /**
+     * 主码解析
+     */
     function processLine1(decoded, t, barcode) {
         decoded.type = t; //2
         if (barcode.length < 4) {
@@ -26,7 +30,7 @@
             return decoded;
         }
 
-        decoded.labelerId = barcode.substring(0, 4);
+        decoded.labelerId = barcode.substring(0, 4); // 厂商信息
         barcode = barcode.substring(4);
 
         if (_.isEmpty(barcode)) {
@@ -36,7 +40,7 @@
 
         // if Concatenated the check char is in the second part of the barcode
         if (decoded.type !== type.Concatenated) {
-            decoded.check = barcode.charAt(barcode.length - 1);
+            decoded.check = barcode.charAt(barcode.length - 1);// 最后一位校验码
             barcode = barcode.substring(0, barcode.length - 1);
             if (_.isEmpty(barcode)) {
                 decoded.error = error.InvalidLine1;
@@ -44,7 +48,7 @@
             }
         }
 
-        decoded.uom = parseInt(barcode.charAt(barcode.length - 1), 10);
+        decoded.uom = parseInt(barcode.charAt(barcode.length - 1), 10); // 倒数第二位校验码
         barcode = barcode.substring(0, barcode.length - 1);
         if (_.isEmpty(barcode)) {
             decoded.error = error.InvalidLine1;
@@ -54,11 +58,14 @@
         return decoded;
     }
 
+    /**
+     * 副码解析
+     */
     function processLine2(decoded, type, barcode) {
-        decoded.type = type;
+        decoded.type = type; // 3
         if (barcode.length > 0 && !isNaN(barcode.charAt(0))) {
             if (barcode.length < 5) {
-                decoded.error = error.InvalidDate;
+                decoded.error = error.InvalidDate; // '+'号打头，长度需大于5位
                 return decoded;
             }
             decoded.date = moment(barcode.substring(0, 5), "YYDDD");
@@ -82,6 +89,10 @@
         return decoded;
     }
 
+    /**
+     * 解析副码的验证码和批号信息
+     * 若为第二副码，当前方法解析所得的批号（包含日期和批号），需要进一步解析
+     */
     function decodeLotSerialCheckLink(string, barcodeType, propertyName, hasQty) {
         if (_.isEmpty(string)) {
             return {
@@ -115,6 +126,9 @@
         return decoded;
     }
 
+    /**
+     * 解析第二副码的日期和批号信息
+     */
     function extractMomentFromString(object, stringProperty, momentProperty) {
         var string = object[stringProperty];
         if (!_.isString(string) || _.isEmpty(string)) {
@@ -171,6 +185,10 @@
         object[stringProperty] = string.substring(dateFormat.length);
     }
 
+    /**
+     * '$$' 或'$$+'开头的第二副码解析时使用，取决于之后跟的第一个字符的值
+     * 若为8或9，则进一步解析上一步得到的批号，从中解析出一个quality属性
+     */
     function extractQuantityFromString(object, string, quantityProperty) {
         var i = parseInt(string.charAt(0), 10);
         if (!_.isNumber(i)) {
@@ -222,6 +240,9 @@
         return character.match(numbers);
     }
 
+    /**
+     * 条码解析的起始方法
+     */
     const parseHIBC = (barcode) => {
         var decoded = {
             barcode: _.clone(barcode)
@@ -266,7 +287,7 @@
 
         // Check and Link characters can contain a "/" so remove them to not affect the split
         var potentialCheckAndLinkCharacters = barcode.substring(barcode.length - 2);
-        barcode = barcode.substring(0, barcode.length - 2);
+        barcode = barcode.substring(0, barcode.length - 2); // 去掉末两位的标志位
 
         var array = barcode.split("/");
         if (array.length === 1) {
@@ -288,22 +309,25 @@
 
 
 module.exports = arrOfCode => {
-  const obj = {};
-  arrOfCode.forEach(val => {
-    const res = parseHIBC(val);
-    // console.log(res);
-    if(!_.isUndefined(res.error)) {
-      throw new Error(123);
-    }
-    if(res.type === 1 || res.type === 2) {
-      obj.HIBC = res.labelerId.concat(res.product);
-      obj.SPBH = res.product;
-    }
-    if(res.type === 3) {
-      obj.SPPH = res.lot;
-      obj.YXQZ = Date.parse(res.date);
-    }
-  });
-  // console.log(obj);
-  return obj;
+//   const obj = {};
+//   arrOfCode.forEach(val => {
+//     const res = parseHIBC(val);
+//     // console.log(res);
+//     if(!_.isUndefined(res.error)) {
+//       throw new Error(123);
+//     }
+//     if(res.type === 1 || res.type === 2) {
+//       obj.HIBC = res.labelerId.concat(res.product);
+//       obj.SPBH = res.product;
+//     }
+//     if(res.type === 3) {
+//       obj.SPPH = res.lot;
+//       obj.YXQZ = Date.parse(res.date);
+//     }
+//   });
+//   console.log(obj);
+//   return obj;
+    arrOfCode.forEach(val => {
+      debug(parseHIBC(val));
+    });
 };

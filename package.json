@@ -4,12 +4,19 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "test": "cross-env DEBUG=debug ./node_modules/mocha/bin/mocha ./mocha/demo01.js"
+    "test": "cross-env DEBUG=debug ./node_modules/mocha/bin/mocha ./mocha/demo01.js",
+    "hibc": "cross-env DEBUG=debug node ./HIBC/hibc_test.js",
+    "ucc": "cross-env DEBUG=debug node ./ucc/ucc_test.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "assert": "^1.4.1",
+    "debug": "^2.6.0",
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^7.0.0-beta.0",
+    "eslint-plugin-promise": "^3.4.1",
+    "eslint-plugin-standard": "^2.0.1",
     "lodash": "^4.17.2",
     "mocha": "^3.2.0"
   },
