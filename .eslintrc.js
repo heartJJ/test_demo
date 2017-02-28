@@ -1,13 +1,18 @@
 module.exports = {
-    "extends": "standard",
-    "installedESLint": true,
-    "plugins": [
-        "standard",
-        "promise"
-    ],
-    "env": {
-      "node": true,
-      "es6": true,
-      "mocha": true
-    }
+   "env": {
+    "browser": false,
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
+    "comma-dangle": [ 0 ]
+  }
 };

@@ -13,7 +13,7 @@ const _ = require('lodash'),
     InvalidMainCode: 9, // 主码格式不符合要求
     InvalidAuxiliaryCode: 10 // 副码格式不符合要求
   },
- type = {
+  type = {
     Concatenated: 1, // 主副码一起，以 '/'分隔
     Line1: 2, // 主码
     Line2: 3 // 副码
@@ -62,7 +62,7 @@ const remove = barcode => {
     checkCode(barcode, 2);
   }
   return barcode;
-}
+};
 
 /**
  * 正则验证
@@ -70,7 +70,7 @@ const remove = barcode => {
 const matchesLetters = character => {
   const letters = /^[a-zA-Z]+$/;
   return character.match(letters);
-}
+};
 
 /**
  * 主码解析，当t为1时，没有check属性
@@ -149,7 +149,7 @@ const getQuantity = (parseCode, code) => {
   checkCode(quantity, 8); // 验证quantity是否为数字
   parseCode.quantity = quantity;
   return code;
-}
+};
 
 /**
  * 解析第二副码的日期和批号信息
@@ -159,7 +159,7 @@ const getQuantity = (parseCode, code) => {
 const getDate = (parseCode, propertyName) => {
   let string = parseCode[propertyName];
   if (!_.isString(string) || _.isEmpty(string)) {
-      return;
+    return;
   }
 
   const dateFormat = parseInt(string.substring(0, 1), 10);
@@ -169,30 +169,30 @@ const getDate = (parseCode, propertyName) => {
   switch (dateFormat) {
     case 0:
     case 1:
-        format = "MMYY";
-        break;
+      format = 'MMYY';
+      break;
     case 2:
-        format = "MMDDYY";
-        break;
+      format = 'MMDDYY';
+      break;
     case 3:
-        format = "YYMMDD";
-        break;
+      format = 'YYMMDD';
+      break;
     case 4:
-        format = "YYMMDDHH";
-        break;
+      format = 'YYMMDDHH';
+      break;
     case 5:
-        format = "YYDDD";
-        break;
+      format = 'YYDDD';
+      break;
     case 6:
-        format = "YYDDDHH";
-        break;
+      format = 'YYDDDHH';
+      break;
     case 7:
-        // no date following the 7
-        parseCode[propertyName] = string.substring(1);
-        return;
+      // no date following the 7
+      parseCode[propertyName] = string.substring(1);
+      return;
     default:
-        // no date char
-        return; 
+      // no date char
+      return; 
   }
 
   if (dateFormat > 1) {
@@ -288,5 +288,6 @@ module.exports = arrOfCode => {
   obj.code = obj.CSXX.concat(obj.SPBH);
   obj.SPPH = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
   debug('换算结果为：', obj);
+  debug(obj);
   return obj;
-}
+};

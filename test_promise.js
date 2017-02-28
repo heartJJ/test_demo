@@ -7,7 +7,7 @@ const test_promise = () => {
     console.log('出错了');
     throw new Error(345);
   }); 
-}
+};
 
 const a = co.wrap(function*() {
   const res = yield test_promise();
