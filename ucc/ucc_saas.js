@@ -1,5 +1,6 @@
 /**
  * UCC解码，待完善
+ * 目前 SAAS 实际解析UCC所用文件
  */
 const moment = require('moment'),
   debug = require('debug')('debug');
@@ -16,11 +17,14 @@ const err = {
  * 补充完整条码，将数组合并成一个字符串
  */
 const supplementCode = (tm, obj) => {
+  let index;
   if(tm.length === 2) {
-    if(tm[0].length === 13) {
-      tm[0] = '010'.concat(tm[0]);
-    } else if(tm[0].length === 17) {
-      tm[0] = '000'.concat(tm[0]);
+    index = tm.findIndex(val => val.length === 13 && val.substring(0, 1) === '0');
+    if (index !== -1) {
+      tm[index] = '010'.concat(tm[index]);
+    } else {
+      index = tm.find(val => val.length === 17 && val.substring(0, 1) === '0');
+      tm[index] = '000'.concat(tm[index]);
     }
   }
   if(tm.length > 2) {
@@ -124,14 +128,14 @@ const handleWithoutSpace = (code, obj) => {
     const index = code.indexOf('21');
     if(index !== -1) {
       const len = code.length - (index + 2); // 计算 21 后长度
-      len >= 2 ? obj.SPPH = code.substring(2, index) : obj.SPPH = code.substring(2, 22);
+      obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
     } else {
       code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
     }
   } else {
     const index = code.indexOf('21');
     if(index !== -1) {
-      obj.SPPH = obj['21'] = code.substring(index, index + 20);
+      obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
     } else {
       obj.error = err.CodeNotComplete;
     }
@@ -140,10 +144,13 @@ const handleWithoutSpace = (code, obj) => {
 
 
 module.exports = (tm) => {
-  const obj = {TM: []};
-  tm.forEach(val => obj.TM.push(val));
+  const obj = {};
+  obj.TM = tm.map(val => val);
   supplementCode(tm, obj);
-  tm[0] = getCodeOfPackage(tm[0], obj);
+  const index = tm.findIndex(val => val.substring(0, 1) === '0');
+  tm[index] = getCodeOfPackage(tm[index], obj);
+  // supplementCode(tm, obj);
+  // tm[0] = getCodeOfPackage(tm[0], obj);
   tm.forEach(code => {
     code = getEnsureLength(code, obj);
     if(code.length > 0) {
