@@ -125,13 +125,14 @@ const handleSpace = (val, obj) => {
 const handleWithoutSpace = (code, obj) => {
   let key = code.substring(0, 2);
   if(key === '10') {
-    const index = code.indexOf('21');
-    if(index !== -1) {
-      const len = code.length - (index + 2); // 计算 21 后长度
-      obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
-    } else {
-      code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
-    }
+    // const index = code.indexOf('21');
+    // if(index !== -1) {
+    //   const len = code.length - (index + 2); // 计算 21 后长度
+    //   obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
+    // } else {
+    //   code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
+    // }
+    code.length <= 22 && code.length > 2 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
   } else {
     const index = code.indexOf('21');
     if(index !== -1) {
