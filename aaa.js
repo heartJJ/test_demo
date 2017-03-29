@@ -52,3 +52,10 @@ console.log(set2);
 
 const flag = [].every(val => val === 1);
 console.log(flag);
+
+
+const arr_map = [1, 2, 3].map(val => {
+  val = val +1;
+});
+
+console.log(arr_map.length);
