@@ -19,13 +19,14 @@ const _ = require('lodash'),
     Line2: 3 // 副码
   };
 
+let err;
+
 /**
  * 验证条码
  * @param code 需进行判断的条码部分
  * @param number 数字标记，决定错误判断的条件
  */
 const checkCode = (code, number, length = 0) => {
-  let err = 0;
   switch (number) {
     case 1: err = !_.isString(code) ? error.BarcodeNotAString : 0; break;
     case 2: err = _.isEmpty(code) ? error.EmptyBarcode : 0; break;
