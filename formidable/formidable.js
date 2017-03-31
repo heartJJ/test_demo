@@ -27,7 +27,7 @@ server = http.createServer(function(req, res) {
         fields.push([field, value]);
       })
       .on('file', function(field, file) {
-        fs.renameSync(file.path, form.uploadDir+'test.txt');//重命名
+        fs.renameSync(file.path, form.uploadDir+'test.csv');//重命名
         console.log(field, file);
         files.push([field, file]);
       })
