@@ -62,6 +62,10 @@ const print = co.wrap(function*(ms, val) {
 // test();
 
 
+
+/**
+ * 对co 包装方法的一些测试
+ */
 const test_co1 = () => {
   return co(function*() {
     yield print(1000, '在 co 内 return');

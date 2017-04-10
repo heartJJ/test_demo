@@ -29,33 +29,44 @@
 
 // console.log(b.concat(a));
 
-const set = new Set();
+// const set = new Set();
 
-for (let i = 0; i < 5; i++) {
-  set.add(i);
-}
+// for (let i = 0; i < 5; i++) {
+//   set.add(i);
+// }
 
-const arr1 = [...set];
+// const arr1 = [...set];
 
-console.log(arr1);
+// console.log(arr1);
 
-const arr2 = [
-  { DDID: 10000, DDLX: '2'},
-  { DDID: 10000, DDLX: '1'},
-  { DDID: 20000, DDLX: '2'}
-];
+// const arr2 = [
+//   { DDID: 10000, DDLX: '2'},
+//   { DDID: 10000, DDLX: '1'},
+//   { DDID: 20000, DDLX: '2'}
+// ];
 
-const set2 = new Set();
-arr2.forEach(val => set2.add(val.DDID));
+// const set2 = new Set();
+// arr2.forEach(val => set2.add(val.DDID));
 
-console.log(set2);
+// console.log(set2);
 
-const flag = [].every(val => val === 1);
-console.log(flag);
+// const flag = [].every(val => val === 1);
+// console.log(flag);
 
 
-const arr_map = [1, 2, 3].map(val => {
-  val = val +1;
-});
+// const arr_map = [1, 2, 3].map(val => {
+//   val = val +1;
+// });
 
-console.log(arr_map.length);
+// console.log(arr_map.length);
+
+const func = ( {a}) => {
+  console.log(a);
+};
+
+const test = () => {
+  const a = {name: 'a'};
+  func({a});
+};
+
+test();

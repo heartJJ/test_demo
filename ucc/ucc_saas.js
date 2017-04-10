@@ -125,24 +125,30 @@ const handleSpace = (val, obj) => {
 const handleWithoutSpace = (code, obj) => {
   // let key = code.substring(0, 2);
   if(code.substring(0, 2) === '10') {
-    // const index = code.indexOf('21');
-    // if(index !== -1) {
+    obj.SPPH = code.substring(2, 22);
+    const index = code.indexOf('21');
+    if (index >= 22) {
+      obj['21'] = code.substring(index);
+    }
+
+    // if(index !== -1 && index > 2) {
     //   const len = code.length - (index + 2); // 计算 21 后长度
     //   obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
     // } else {
     //   code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
     // }
-    code.length > 2 && code.length <= 22 ?
-      obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
+
+    // code.length > 2 && code.length <= 22 ?
+    //   obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
   } else {
-    // const index = code.indexOf('21');
+    const index = code.indexOf('21');
     // if(index !== -1) {
     //   obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
     // } else {
     //   obj.error = err.CodeNotComplete;
     // }
-    code.indexOf('21') !== -1 ?
-      obj.SPPH = obj['21'] = code.substring(index + 2, index + 22) : obj.error = err.CodeNotComplete;
+    index === -1 ? obj.error = err.CodeNotComplete :
+      obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
   }
 };
 
