@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cross-env DEBUG=debug ./node_modules/mocha/bin/mocha ./mocha/demo01.js",
     "hibc": "cross-env DEBUG=debug node ./HIBC/hibc_test.js",
-    "ucc": "cross-env DEBUG=debug node ./ucc/ucc_test.js"
+    "ucc": "cross-env DEBUG=debug node ./ucc/ucc_test.js",
+    "process": "cross-env DEBUG=debug node ./node/process/demo01.js 427.35, 17.00, 82.65, 500.00"
   },
   "author": "",
   "license": "ISC",

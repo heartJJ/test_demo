@@ -274,7 +274,8 @@ module.exports = arrOfCode => {
   const obj = {};
   arrOfCode.forEach(val => {
     const parseCode = parseHIBC(val);
-    debug('解析结果为：', parseCode);
+    debug('解析结果如下：');
+    debug(parseCode);
     Object.keys(parseCode).forEach(key => {
       switch (key) {
         case 'product': obj.SPBH = parseCode.product; break;
@@ -288,7 +289,7 @@ module.exports = arrOfCode => {
   });
   obj.code = obj.CSXX.concat(obj.SPBH);
   obj.SPPH = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
-  debug('换算结果为：', obj);
+  debug('转换后结果如下：');
   debug(obj);
   return obj;
 };
