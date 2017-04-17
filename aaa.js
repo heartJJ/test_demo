@@ -43,3 +43,55 @@ const test = co.wrap(function*(){
 });
 
 test();
+// const arr = [1, 2, 3];
+
+// arr.forEach(val => console.log(val));
+
+// const a = (val = true) => {
+//   console.log(val);
+// };  
+
+
+// a(undefined);
+
+// a(false);
+
+
+// const a = [1,2,3];
+
+// const b = [];
+
+// console.log(a.concat(b));
+
+// console.log(b.concat(a));
+
+const set = new Set();
+
+for (let i = 0; i < 5; i++) {
+  set.add(i);
+}
+
+const arr1 = [...set];
+
+console.log(arr1);
+
+const arr2 = [
+  { DDID: 10000, DDLX: '2'},
+  { DDID: 10000, DDLX: '1'},
+  { DDID: 20000, DDLX: '2'}
+];
+
+const set2 = new Set();
+arr2.forEach(val => set2.add(val.DDID));
+
+console.log(set2);
+
+const flag = [].every(val => val === 1);
+console.log(flag);
+
+
+const arr_map = [1, 2, 3].map(val => {
+  val = val +1;
+});
+
+console.log(arr_map.length);

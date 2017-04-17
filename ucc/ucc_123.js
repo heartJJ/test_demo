@@ -1,9 +1,8 @@
 /**
  * UCC解码，待完善
- * 目前 SAAS 实际解析UCC所用文件
  */
 const moment = require('moment'),
-  debug = require('debug')('debug');
+  debug = require('debug')('api');
 
 const err = {
   MistakeLengthOfArray: 1, // 条码数组长度有误
@@ -123,26 +122,22 @@ const handleSpace = (val, obj) => {
  * 暂时能解析的code: ‘10’打头，或者'10'不打头，存在'21'的情况
  */
 const handleWithoutSpace = (code, obj) => {
-  // let key = code.substring(0, 2);
-  if(code.substring(0, 2) === '10') {
-    // const index = code.indexOf('21');
-    // if(index !== -1) {
-    //   const len = code.length - (index + 2); // 计算 21 后长度
-    //   obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
-    // } else {
-    //   code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
-    // }
-    code.length > 2 && code.length <= 22 ?
-      obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
+  let key = code.substring(0, 2);
+  if(key === '10') {
+    const index = code.indexOf('21');
+    if(index !== -1) {
+      const len = code.length - (index + 2); // 计算 21 后长度
+      obj.SPPH = len >= 2 ? code.substring(2, index) : code.substring(2, 22);
+    } else {
+      code.length <= 22 ? obj.SPPH = code.substring(2) : obj.error = err.CodeParseFail;
+    }
   } else {
-    // const index = code.indexOf('21');
-    // if(index !== -1) {
-    //   obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
-    // } else {
-    //   obj.error = err.CodeNotComplete;
-    // }
-    code.indexOf('21') !== -1 ?
-      obj.SPPH = obj['21'] = code.substring(index + 2, index + 22) : obj.error = err.CodeNotComplete;
+    const index = code.indexOf('21');
+    if(index !== -1) {
+      obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
+    } else {
+      obj.error = err.CodeNotComplete;
+    }
   }
 };
 
@@ -153,8 +148,6 @@ module.exports = (tm) => {
   supplementCode(tm, obj);
   const index = tm.findIndex(val => val.substring(0, 1) === '0');
   tm[index] = getCodeOfPackage(tm[index], obj);
-  // supplementCode(tm, obj);
-  // tm[0] = getCodeOfPackage(tm[0], obj);
   tm.forEach(code => {
     code = getEnsureLength(code, obj);
     if(code.length > 0) {
