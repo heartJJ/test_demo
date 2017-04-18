@@ -1,9 +1,11 @@
 /**
  * 注：箭头函数没有prototype属性
  * const a = () => {},  new a () => Error
+ * 
  */
 
 function a() {
+  // A 绑定在 a.prototype上
   this.A = () => {
     console.log('这是A方法');
   };
@@ -29,10 +31,10 @@ b.prototype = a.prototype;
 c.prototype = new a();
 
 const objB = new b();
-objB.anotherA();
+objB.anotherA(); // 这是A另一个方法
 const objC = new c();
-objC.A();
-objC.anotherA();
+objC.A(); // 这是A方法
+objC.anotherA(); // 这是A另一个方法
 
 // const d = function () {
 //   this.D = () => {
