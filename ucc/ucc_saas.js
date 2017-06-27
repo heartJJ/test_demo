@@ -125,11 +125,16 @@ const handleSpace = (val, obj) => {
 const handleWithoutSpace = (code, obj) => {
   // let key = code.substring(0, 2);
   if(code.substring(0, 2) === '10') {
-    obj.SPPH = code.substring(2, 22);
+    // obj.SPPH = code.substring(2, 22);
+    // const index = code.indexOf('21');
+    // if (index >= 22) {
+    //   obj['21'] = code.substring(index);
+    // }
+
     const index = code.indexOf('21');
-    if (index >= 22) {
-      obj['21'] = code.substring(index);
-    }
+    obj.spph = index >= 10 ? 
+      code.substring(2, index) + code.substring(index + 2) :
+      code.substring(2, 22);
 
     // if(index !== -1 && index > 2) {
     //   const len = code.length - (index + 2); // 计算 21 后长度

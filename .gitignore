@@ -4,3 +4,5 @@ node_modules
 code/
 #put any other files ou don't want to check in here
 #such as .DS_Store (OSX), *.bak, etc
+
+*.xlsx
