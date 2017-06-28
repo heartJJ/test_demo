@@ -12,8 +12,12 @@ process.stdin.on('readable', () => {
   var type = process.stdin.read() ;
 
   if (Object.prototype.toString.call(type) === '[object String]') {
-    type = type.substring(0, type.length -2);
+    type = type.substring(0, type.length -1);
+    console.log(type);
+    console.log(type.length);
   } // 去除默认带有的换行符
+
+ 
 
   if (type === 'add' || type === 'cover') {
     

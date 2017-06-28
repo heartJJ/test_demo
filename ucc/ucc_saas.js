@@ -132,7 +132,7 @@ const handleWithoutSpace = (code, obj) => {
     // }
 
     const index = code.indexOf('21');
-    obj.spph = index >= 10 ? 
+    obj.spph = index >= 8 ? 
       code.substring(2, index) + code.substring(index + 2) :
       code.substring(2, 22);
 

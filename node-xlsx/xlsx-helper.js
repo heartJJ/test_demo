@@ -1,11 +1,16 @@
-//const xlsx =  require('node-xlsx'),
-const XLSX = require('xlsx'),
-  fs = require('fs'),
-  path = require('path');
+// import XLSX from 'xlsx';
+const XLSX = require('xlsx');
 
 const isBoolean = maybeBoolean => typeof maybeBoolean === 'boolean';
 const isNumber = maybeNumber => typeof maybeNumber === 'number';
 const isString = maybeString => typeof maybeString === 'string';
+
+// const originDate = new Date(Date.UTC(1899, 11, 30));
+
+// const buildExcelDate = (value, is1904) => {
+//   const epoch = Date.parse(value + (is1904 ? 1462 : 0));
+//   return (epoch - originDate) / (864e5);
+// };
 
 const buildSheetFromMatrix = (data, options = {}) => {
   const workSheet = {};
@@ -37,7 +42,6 @@ const buildSheetFromMatrix = (data, options = {}) => {
     }
   }
   if (range.s.c < 1e7) {
-    console.log(range);
     workSheet['!ref'] = XLSX.utils.encode_range(range);
   }
   if (options['!cols']) {
@@ -56,10 +60,7 @@ const build = (worksheets, options = {}) => {
     bookSST: false,
     type: 'binary'
   };
-  const workBook = {
-    SheetNames: [],
-    Sheets: {}
-  };
+  const workBook = new Workbook();
   worksheets.forEach((worksheet) => {
     const name = worksheet.name || 'Sheet';
     const data = buildSheetFromMatrix(worksheet.data || [], options);
@@ -70,21 +71,4 @@ const build = (worksheets, options = {}) => {
   return excelData instanceof Buffer ? excelData : new Buffer(excelData, 'binary');
 };
 
-
-const data = [  
-  ['时间', '价格' , '商品'],
-  [new Date(), 1000, '商品1'],
-  [new Date('2017-06-27'), 2000, '商品2']
-];
-
-const buffer = build([
-  {name: 'sheet1', data: data}
-]);// Returns a buffer
-
-
-fs.writeFileSync(__dirname + '/test.xlsx', buffer,'binary');
-
-
-const res = XLSX.readFile('test.xlsx', {cellDates: true});
-
-console.log(res.Sheets.sheet1);
+export {build};
