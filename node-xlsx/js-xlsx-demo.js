@@ -5,11 +5,11 @@ fs = require('fs');
 
 // let buffer = fs.readFileSync(`${__dirname}/credit.xlsx`);
 
-let res = xlsx.readFile(`${__dirname}/test.xlsx`);
+let res = xlsx.readFile(`${__dirname}/瑞祥_定价 (2).xlsx`);
 
 //let res = xlsx.read(buffer);
 
-console.log(res.SheetNames);
+// console.log(res.SheetNames);
 
 console.log(res.Sheets[res.SheetNames[0]]);
 
