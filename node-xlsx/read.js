@@ -1,7 +1,7 @@
 const xlsx =  require('node-xlsx'),
   fs = require('fs');
 
-const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/江苏永康&武汉敦行-汇总数据(1).xlsx`));
+const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/江苏永康&武汉敦行-汇总数据（柳）.xlsx`));
 //console.log(workSheetsFromBuffer.toString());
 // console.log(workSheetsFromBuffer);
 // workSheetsFromBuffer.forEach(val => {
@@ -33,10 +33,12 @@ const sheet_data = workSheetsFromBuffer.find(val => val.name === '商品信息')
 
 // console.log(sheet.data.length);
 // console.log(sheet.data[0]);
-console.log(sheet_data.length);
+// console.log(sheet_data);
+
+console.log(Date.now());
 
 const head_arr = sheet_data.data[1],
-  data_arr = sheet_data.data.filter( (data, index) => index > 1 && index < 10);
+  data_arr = sheet_data.data.filter( (data, index) => index > 1);
 
 const res = data_arr.map(data => {
   let obj = {};
@@ -44,4 +46,6 @@ const res = data_arr.map(data => {
   return obj;
 });
 
-console.log(res);
+console.log(res.length);
+
+console.log(Date.now());

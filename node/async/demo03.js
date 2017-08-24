@@ -26,6 +26,7 @@ const test = async () => {
     await print(1000, val);
   });
 
+  //console.log('本行代码将会率先执行');
 };
 
  test();

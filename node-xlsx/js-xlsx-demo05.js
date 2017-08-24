@@ -3,15 +3,15 @@ const XLSX = require('xlsx'),
   _ = require('lodash'),
   timezone = new Date().getTimezoneOffset();
 
-const res = XLSX.readFile(`${__dirname}/江苏永康&武汉敦行-汇总数据（柳）.xlsx`);
+const res = XLSX.readFile(`${__dirname}/武汉敦行致远科技有限公司商品表20170720.xlsx`);
 
 // console.log(res.Sheets);
 
 // Object.keys(res.Sheets).forEach(key => console.log(key));
 
-const a = XLSX.utils.sheet_to_json(res.Sheets['注册证信息'], {cellDates: true});
+const a = XLSX.utils.sheet_to_json(res.Sheets['3.商品信息'], {cellDates: true});
 
-// console.log(a)
+console.log(a[10]['商品类型\r\n(0 商品 1工具)']);
 
 // a.forEach(val => {
 //   if (typeof val['注册证批准日期'] !== 'number' || typeof val['注册证有效期至'] !== 'number' ) {

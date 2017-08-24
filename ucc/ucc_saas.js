@@ -3,7 +3,8 @@
  * 目前 SAAS 实际解析UCC所用文件
  */
 const moment = require('moment'),
-  debug = require('debug')('debug');
+  debug = require('debug')('debug'),
+  _ = require('lodash');
 
 const err = {
   MistakeLengthOfArray: 1, // 条码数组长度有误
@@ -12,6 +13,12 @@ const err = {
   CodeParseFail: 4, // 无法解析条码
   CodeNotComplete: 5 // 条码不完整，无 ‘10’ 和 ‘21’
 };
+
+let isComplete = false;
+
+let code_sp = new Map([
+  ['28031497000101', '1230']
+]);
 
 /**
  * 补充完整条码，将数组合并成一个字符串
@@ -60,6 +67,14 @@ const getCodeOfPackage = (code, obj) => {
  */
 const getEnsureLength = (code, obj) => {
   let flag = true;
+
+  if (code.substring(0, 3) === '240') {
+    let spbh = code_sp.get(obj.code);
+    if ( !_.isUndefined(spbh)) {
+      code = code.substring(spbh.length + 3);
+    }
+  }
+
   while(flag) {
     let key = code.substring(0, 2); 
     const res = ['11', '13', '15', '17'].find(val => val === key);
@@ -130,7 +145,7 @@ const handleWithoutSpace = (code, obj) => {
     // if (index >= 22) {
     //   obj['21'] = code.substring(index);
     // }
-
+    isComplete = true;
     const index = code.indexOf('21');
     obj.spph = index >= 8 ? 
       code.substring(2, index) + code.substring(index + 2) :
@@ -152,9 +167,14 @@ const handleWithoutSpace = (code, obj) => {
     // } else {
     //   obj.error = err.CodeNotComplete;
     // }
-    index === -1 ? obj.error = err.CodeNotComplete :
+    // index === -1 ? obj.error = err.CodeNotComplete :
+    //   obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
+    if (index !== -1) {
       obj.SPPH = obj['21'] = code.substring(index + 2, index + 22);
+      isComplete = true;
+    }
   }
+
 };
 
 
@@ -172,6 +192,10 @@ module.exports = (tm) => {
       getUnensureLength(code, obj);
     }
   }); 
+  if (!isComplete) {
+    obj.error = err.CodeNotComplete;
+  }
+
   debug('转换后的信息为：', obj);
   return obj;
 };

@@ -11,3 +11,17 @@ console.log(b);
 
 ret_date=new Date(1900,0,42913-1);
 console.log(ret_date);
+
+
+
+
+let aa = '1';
+let bb;
+
+switch(aa) {
+  case 1: bb =1;break;
+  case '1': bb = 2; break;
+  default: bb =0; 
+}
+
+console.log(bb);

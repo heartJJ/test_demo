@@ -124,6 +124,12 @@ const getLotSerialCheckLink = (parseCode, code, t, propertyName, hasQty) => {
     code = code.substring(0, code.length - 1);
   }
 
+  // if (t === type.Concatenated) {
+  //   debug('处理前:', code);
+  //   code = code.replace(/[a-zA-Z]{1}\d{2}$/, '');
+  //   debug('处理后:', code);
+  // }
+
   parseCode[propertyName] = code;
   return parseCode;
 };
@@ -214,6 +220,7 @@ const getDate = (parseCode, propertyName) => {
  * @param code 待解析的部分条码
  */
 const parseAuxiliaryCode = (parseCode, t, code) => {
+  console.log(code);
   parseCode.type = t;
   if (code.length > 0 && !isNaN(code.charAt(0))) {
     checkCode(code, 6); // '+'号打头，长度需大于5位
@@ -283,12 +290,15 @@ module.exports = arrOfCode => {
         case 'lot': obj.LOT = parseCode.lot; break;
         case 'serial': obj.SERIAL = parseCode.serial; break;
         case 'date': obj.YXQZ = Date.parse(parseCode.date); break;
+        case 'uom': obj.uom = parseCode.uom; break;
         default: break;
       }
     });
   });
-  obj.code = obj.CSXX.concat(obj.SPBH);
-  obj.SPPH = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+
+  obj.code = obj.CSXX + obj.SPBH + obj.uom;
+  let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+  obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
   debug('转换后结果如下：');
   debug(obj);
   return obj;
