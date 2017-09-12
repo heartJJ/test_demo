@@ -276,6 +276,21 @@ const parseHIBC = barcode => {
   }
 };
 
+/**
+ * 处理商品批号, 暂时只处理两种情况，后续有其他类型，再补充reg数组
+ */
+const handleSPPH = (obj) => {
+  let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+
+  let reg = [/[a-zA-Z]{1}\d{2}$/, /[a-zA-Z]{1}\d{1}$/],
+    index = 0;
+
+  do {
+    obj.SPPH = batNumber.replace(reg[index], '');
+    index++;
+  } while(obj.SPPH === batNumber && index <= reg.length - 1);
+  
+};
 
 module.exports = arrOfCode => {
   const obj = {};
@@ -297,8 +312,10 @@ module.exports = arrOfCode => {
   });
 
   obj.code = obj.CSXX + obj.SPBH + obj.uom;
-  let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
-  obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
+  // let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+  // obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
+  handleSPPH(obj);
+
   debug('转换后结果如下：');
   debug(obj);
   return obj;
