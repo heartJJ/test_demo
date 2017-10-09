@@ -1,7 +1,7 @@
 const xlsx =  require('node-xlsx'),
   fs = require('fs');
 
-const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/首营品种导入标准模板V1.0.xlsx`));
+const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/出_入库导入模板.xlsx`));
 
 //console.log(workSheetsFromBuffer.toString());
 // console.log(workSheetsFromBuffer);
@@ -15,9 +15,9 @@ const workSheetsFromBuffer = xlsx.parse(fs.readFileSync(`${__dirname}/首营品�
 //   console.log(val.data[0]);
 // });
 
-const sheet_data = workSheetsFromBuffer.find(val => val.name === '下载模板');
+const sheet_data = workSheetsFromBuffer.find(val => val.name === '出库导入');
 
-//console.log(sheet_data);
+console.log(sheet_data);
 
 
 // sheet.data.forEach(val => {
@@ -38,11 +38,11 @@ const sheet_data = workSheetsFromBuffer.find(val => val.name === '下载模板')
 
 //console.log(Date.now());
 
-const head_arr = sheet_data.data.shift(),
-  data = sheet_data.data.filter(v => v.length === 8);
-console.log(head_arr);
+// const head_arr = sheet_data.data.shift(),
+//   data = sheet_data.data.filter(v => v.length === 8);
+// console.log(head_arr);
 
-console.log(data);
+// console.log(data);
 
 
 

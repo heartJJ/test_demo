@@ -1,11 +1,12 @@
 const moment = require('moment');
 
-const aa = moment('2016-12-25');
-const bb = moment('20161225');
+const aa = moment('2016-01-10');
+const cc = moment('20161201');
 // console.log(Object.prototype.toString.call(a));
 
 console.log(Date.parse(aa));
-console.log(Date.parse(bb));
+console.log(Date.parse(cc));
+
 
 
 

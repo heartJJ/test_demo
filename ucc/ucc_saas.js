@@ -147,6 +147,7 @@ const handleWithoutSpace = (code, obj) => {
     // }
     isComplete = true;
     const index = code.indexOf('21');
+    debug(index);
     obj.spph = index >= 8 ? 
       code.substring(2, index) + code.substring(index + 2) :
       code.substring(2, 22);
@@ -198,4 +199,7 @@ module.exports = (tm) => {
 
   debug('转换后的信息为：', obj);
   return obj;
+
+  // getCodeOfPackage(tm[0], obj);
+  // debug(obj);
 };

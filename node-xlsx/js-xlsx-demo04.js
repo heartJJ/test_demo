@@ -2,7 +2,8 @@ const XLSX = require('xlsx'),
   fs = require('fs'),
   _ = require('lodash');
 
-const res = XLSX.readFile(`${__dirname}/江苏永康&武汉敦行-汇总数据（柳）.xlsx`);
+const res = XLSX.readFile(`${__dirname}/出_入库导入模板.xlsx`);
+console.log(res);
 
 // console.log(res.Sheets);
 
@@ -15,8 +16,9 @@ const setStr = (str) => {
 };
 
 
-const a = XLSX.utils.sheet_to_json(res.Sheets['商品信息']);
-a.shift();
+const a = XLSX.utils.sheet_to_json(res.Sheets['入库导入']);
+//a.shift();
+console.log(Object.keys(a[0]));
 // console.log(a[0]);
 
 let map1 = new Map(),
