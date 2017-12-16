@@ -87,7 +87,7 @@ const parseMainCode = (parseCode, t, code) => {
   code = code.substring(4);
 
   if (parseCode.type !== type.Concatenated) {
-    parseCode.check = code.charAt(code.length - 1); // 最后一位校验码
+    parseCode.checkMain = code.charAt(code.length - 1); // 最后一位校验码
     code = code.substring(0, code.length - 1);
   }
   
@@ -281,7 +281,7 @@ const parseHIBC = barcode => {
  */
 const handleSPPH = (obj) => {
   let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
-
+  debug('batNumber', batNumber);
   let reg = [/[a-zA-Z]{1}\d{2}$/, /[a-zA-Z]{1}\d{1}$/],
     index = 0;
 
@@ -306,12 +306,13 @@ module.exports = arrOfCode => {
         case 'serial': obj.SERIAL = parseCode.serial; break;
         case 'date': obj.YXQZ = Date.parse(parseCode.date); break;
         case 'uom': obj.uom = parseCode.uom; break;
+        case 'checkMain': obj.checkMain = parseCode.checkMain; break;
         default: break;
       }
     });
   });
 
-  obj.code = obj.CSXX + obj.SPBH + obj.uom;
+  obj.code = obj.CSXX + obj.SPBH + obj.uom + ( obj.checkMain || '');
   // let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
   // obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
   handleSPPH(obj);

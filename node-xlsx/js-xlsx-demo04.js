@@ -3,7 +3,7 @@ const XLSX = require('xlsx'),
   _ = require('lodash');
 
 const res = XLSX.readFile(`${__dirname}/出_入库导入模板.xlsx`);
-console.log(res);
+// console.log(res);
 
 // console.log(res.Sheets);
 
@@ -16,7 +16,8 @@ const setStr = (str) => {
 };
 
 
-const a = XLSX.utils.sheet_to_json(res.Sheets['入库导入']);
+const a = XLSX.utils.sheet_to_json(res.Sheets['入库导入'], {header: 1, defval: '' });
+console.log(a);
 //a.shift();
 console.log(Object.keys(a[0]));
 // console.log(a[0]);

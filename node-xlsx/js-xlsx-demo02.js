@@ -1,9 +1,9 @@
 const XLSX = require('xlsx'),
   fs = require('fs');
 
-const res = XLSX.readFile('test.xlsx', {cellDates: true});
+const res = XLSX.readFile(__dirname +'/test.xlsx', {cellDates: true, dateNF: 15});
 
-// console.log(res);
+// console.log(res.Sheets);
 
 // let obj_csv = XLSX.utils.sheet_to_csv(res.Sheets.sheet1);
 // console.log(obj_csv);
@@ -16,9 +16,9 @@ const res = XLSX.readFile('test.xlsx', {cellDates: true});
 // console.log(res);
 // console.log(XLSX.utils.sheet_to_json);
 // console.log(res.Sheets.sheet1);
-console.log(res.SheetNames);
+//console.log(res.SheetNames);
 
-let obj = XLSX.utils.sheet_to_json(res.Sheets.sheet1, {dataDF: 12, cellDates: true});
+let obj = XLSX.utils.sheet_to_json(res.Sheets.sheet1, {raw: true, defval: ''});
 
 console.log(obj);
 
