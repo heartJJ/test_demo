@@ -143,6 +143,7 @@ const handleSpace = (val, obj) => {
  * 暂时能解析的code: ‘10’打头，或者'10'不打头，存在'21'的情况
  */
 const handleWithoutSpace = (code, obj) => {
+<<<<<<< HEAD
   if(code.substring(0, 2) === '10') {
     
     isComplete = true;
@@ -151,6 +152,7 @@ const handleWithoutSpace = (code, obj) => {
       // code.substring(2, index) + code.substring(index + 2) :
       code.substring(2, index) :
       code.substring(2, 22);
+
   } else {
     const index = code.indexOf('21');
     

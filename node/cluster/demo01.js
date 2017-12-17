@@ -1,3 +1,4 @@
+
 /**
  * 通过消息传递来监控工作进程状态
  */
@@ -36,4 +37,4 @@ if (cluster.isMaster) {
       process: process.pid
     });
   }, 3000);
-}
+
