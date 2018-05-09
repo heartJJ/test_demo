@@ -143,15 +143,30 @@ const handleSpace = (val, obj) => {
  * 暂时能解析的code: ‘10’打头，或者'10'不打头，存在'21'的情况
  */
 const handleWithoutSpace = (code, obj) => {
-<<<<<<< HEAD
+  let i = code.indexOf('（');
+  if (i !== -1) {
+    code = code.substring(0, i);
+  }
+
   if(code.substring(0, 2) === '10') {
-    
+    debug('需解析批号的剩余条码段为', code);
     isComplete = true;
+    // obj.SPPH = code.substring(2, 22);
     const index = code.indexOf('21');
-    obj.SPPH = index >= 8 ? 
-      // code.substring(2, index) + code.substring(index + 2) :
-      code.substring(2, index) :
-      code.substring(2, 22);
+    if (index !== -1) {
+      const lsh = code.substring(index + 2);
+      debug('查找到的流水号为', lsh);
+      obj.SPPH = lsh.length >= 3 && index >= 8 ? 
+        code.substring(2, index) : code.substring(2, 22);
+    } else {
+      obj.SPPH = code.substring(2, 22);
+    }
+
+    // debug('index is', index);
+    // obj.SPPH = index >= 9 ? 
+    //   // code.substring(2, index) + code.substring(index + 2) :
+    //   code.substring(2, index) :
+    //   code.substring(2, 22);
 
   } else {
     const index = code.indexOf('21');
@@ -169,7 +184,7 @@ module.exports = (tm) => {
   const obj = {error : []};
   // 保留原始上传的条码
   obj.TM = tm.map(val => val);
-  supplementCode(tm, obj);
+  // supplementCode(tm, obj);
 
   // 查找主码，因条码可以乱序扫描
   const index = tm.findIndex(val =>  ['00', '01', '02'].includes(val.substring(0, 2)) );

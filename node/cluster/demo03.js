@@ -7,12 +7,12 @@ var i = 0;
 const pro = () => {
     if (cluster.isMaster) {
         console.log("master start...");
-    
+
         // Fork workers.
         for (var i = 0; i < numCPUs; i++) {
             cluster.fork();
         }
-    
+
         cluster.on('exit', function(worker, code, signal) {
             // console.log('worker ' + worker.process.pid + ' died');
             console.log('worker ' + worker.id + ' died');
@@ -24,9 +24,9 @@ const pro = () => {
             case 3:   console.log('------, now i is ', i); break;
             case 4:    console.log('------, now i is ', i);break;
             default: console.log('-------------'); break;
-    
+
         }
-       process.exit();
+        process.exit();
     }
 }
 

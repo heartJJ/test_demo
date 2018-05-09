@@ -1,5 +1,5 @@
 var cluster = require('cluster');
-var numCPUs = 8;
+var numCPUs = 4;
 var v = 40;
 function fibo (n) {
   return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
@@ -10,14 +10,14 @@ if (cluster.isMaster) {
   for (var i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
-  var i = 8;
+  var i = 4;
   cluster.on('exit', function(worker, code, signal) {
-		if(!--i){
-			console.timeEnd('8 cluster');
-			process.exit(0);
-		}
+    if(!--i){
+      console.timeEnd('8 cluster');
+      process.exit(0);
+    }
   });
 } else {
-	console.log(fibo (v));
-	process.exit(0);
+  console.log(fibo (v));
+  process.exit(0);
 }
