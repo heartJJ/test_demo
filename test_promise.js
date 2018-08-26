@@ -15,3 +15,11 @@ const a = co.wrap(function*() {
 });
 
 a();
+
+
+let today = new Date();
+let utcNowDate =(new Date(today.getFullYear(),today.getMonth(),today.getDate()).getTime() - new Date(1900,0,-1).getTime());
+console.log(today.getTime());
+console.log(utcNowDate);
+console.log( new Date(today.getFullYear(),today.getMonth(),today.getDate()).getTime() );
+console.log(new Date(1900,0,-1).getTime());

@@ -7,7 +7,8 @@
     "test": "cross-env DEBUG=debug ./node_modules/mocha/bin/mocha ./mocha/demo01.js",
     "hibc": "cross-env DEBUG=debug node ./HIBC/hibc_test.js",
     "ucc": "cross-env DEBUG=debug node ./ucc/ucc_test.js",
-    "process": "cross-env DEBUG=debug node ./node/process/demo01.js 427.35, 17.00, 82.65, 500.00"
+    "process": "cross-env DEBUG=debug node ./node/process/demo01.js 427.35, 17.00, 82.65, 500.00",
+    "print": "node ./npm/demo01.js && node ./npm/demo02.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,13 +23,24 @@
     "mocha": "^3.2.0"
   },
   "dependencies": {
+    "chalk": "^2.3.0",
     "co": "^4.6.0",
+    "commander": "^2.9.0",
+    "cron-parser": "^2.4.1",
     "cross-env": "^3.1.4",
     "formidable": "^1.1.1",
     "iconv-lite": "^0.4.15",
+    "inquirer": "^4.0.1",
+    "knex": "^0.14.2",
+    "mathjs": "^4.4.2",
     "moment": "^2.17.1",
+    "mysql": "^2.15.0",
+    "node-arabic-number-to-rmb": "^1.0.2",
     "node-xlsx": "^0.7.4",
+    "nodemailer": "^4.6.7",
+    "pinyin": "^2.8.3",
+    "request": "^2.87.0",
     "socket.io": "^1.7.2",
-    "xlsx": "^0.8.3"
+    "xlsx": "^0.11.15"
   }
 }

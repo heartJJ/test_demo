@@ -1,6 +1,9 @@
 #ignore packages installed by npm
 node_modules
 .vscode
-.code
+code/
 #put any other files ou don't want to check in here
 #such as .DS_Store (OSX), *.bak, etc
+
+*.xlsx
+SQL

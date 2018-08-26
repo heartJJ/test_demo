@@ -11,7 +11,8 @@ const _ = require('lodash'),
     EmptyLinkCharacter: 7,
     InvalidQuantity: 8,
     InvalidMainCode: 9, // 主码格式不符合要求
-    InvalidAuxiliaryCode: 10 // 副码格式不符合要求
+    InvalidAuxiliaryCode: 10, // 副码格式不符合要求
+    CodeNotComplete: 11 // 条码不完整
   },
   type = {
     Concatenated: 1, // 主副码一起，以 '/'分隔
@@ -87,7 +88,7 @@ const parseMainCode = (parseCode, t, code) => {
   code = code.substring(4);
 
   if (parseCode.type !== type.Concatenated) {
-    parseCode.check = code.charAt(code.length - 1); // 最后一位校验码
+    parseCode.checkMain = code.charAt(code.length - 1); // 最后一位校验码
     code = code.substring(0, code.length - 1);
   }
   
@@ -123,6 +124,12 @@ const getLotSerialCheckLink = (parseCode, code, t, propertyName, hasQty) => {
     parseCode.link = code.substring(code.length - 1); // 获取倒数第二位验证信息
     code = code.substring(0, code.length - 1);
   }
+
+  // if (t === type.Concatenated) {
+  //   debug('处理前:', code);
+  //   code = code.replace(/[a-zA-Z]{1}\d{2}$/, '');
+  //   debug('处理后:', code);
+  // }
 
   parseCode[propertyName] = code;
   return parseCode;
@@ -214,12 +221,13 @@ const getDate = (parseCode, propertyName) => {
  * @param code 待解析的部分条码
  */
 const parseAuxiliaryCode = (parseCode, t, code) => {
+  console.log(code);
   parseCode.type = t;
   if (code.length > 0 && !isNaN(code.charAt(0))) {
     checkCode(code, 6); // '+'号打头，长度需大于5位
     parseCode.date = moment(code.substring(0, 5), 'YYDDD');
     getLotSerialCheckLink(parseCode, code.substring(5), t, 'lot', false);
-  } else if (code.length > 2 && code.charAt(0) === '$' && !isNaN(code.charAt(1))) {
+  } else if (code.length > 2 && code.charAt(0) === '$' && code.charAt(1) !== '$' ) {
     getLotSerialCheckLink(parseCode, code.substring(1), t, 'lot', false);
   } else if (code.length > 3 && code.substring(0, 2) === '$+' && !isNaN(code.charAt(2))) {
     getLotSerialCheckLink(parseCode, code.substring(2), t, 'serial', false);
@@ -269,6 +277,21 @@ const parseHIBC = barcode => {
   }
 };
 
+/**
+ * 处理商品批号, 暂时只处理两种情况，后续有其他类型，再补充reg数组
+ */
+const handleSPPH = (obj) => {
+  let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+  debug('batNumber', batNumber);
+  let reg = [/[a-zA-Z]{1}\d{2}$/, /[a-zA-Z]{1}\d{1}$/],
+    index = 0;
+
+  do {
+    obj.SPPH = batNumber.replace(reg[index], '');
+    index++;
+  } while(obj.SPPH === batNumber && index <= reg.length - 1);
+  
+};
 
 module.exports = arrOfCode => {
   const obj = {};
@@ -283,12 +306,22 @@ module.exports = arrOfCode => {
         case 'lot': obj.LOT = parseCode.lot; break;
         case 'serial': obj.SERIAL = parseCode.serial; break;
         case 'date': obj.YXQZ = Date.parse(parseCode.date); break;
+        case 'uom': obj.uom = parseCode.uom; break;
+        case 'checkMain': obj.checkMain = parseCode.checkMain; break;
         default: break;
       }
     });
   });
-  obj.code = obj.CSXX.concat(obj.SPBH);
-  obj.SPPH = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+
+  obj.code = obj.CSXX + obj.SPBH + obj.uom + ( obj.checkMain || '');
+  // let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
+  // obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
+  handleSPPH(obj);
+
+  if (!obj.SPBH || !obj.SPPH) {
+    throw new Error(error.CodeNotComplete);
+  }
+
   debug('转换后结果如下：');
   debug(obj);
   return obj;
