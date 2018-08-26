@@ -162,6 +162,34 @@ const handleWithoutSpace = (code, obj) => {
       obj.SPPH = code.substring(2, 22);
     }
 
+    // 圣犹达品牌 条码，判断 标识符91
+    let batNumber = obj.SPPH,
+      arr91 = batNumber.match(/91/g) || [],
+      index91 = -1;
+
+    for (let i = 0; i < arr91.length; i++) {
+      debug('查找前index91为：', index91);
+      index91 = batNumber.indexOf(91, index91+1);
+      debug('查找后index91为：', index91);
+      let code91 = batNumber.substring(index91 + 2),
+        rest91 = batNumber.substring(0, index91);
+
+      debug('查找到的识别码91后的条码内容为', code91);
+      debug('若截取，得到的批号为', rest91);
+      if (code91.length >= 9 && rest91.length >= 6) {
+        obj.SPPH = batNumber.substring(0, index91);
+        break;
+      }
+    }
+
+
+    // let index91 = obj.SPPH.indexOf('91'),
+    //   code91 = obj.SPPH.substring(index91 + 2),
+    //   batNumber = obj.SPPH.substring(0, index91);
+    // debug('查找到的识别码91后的条码内容为', code91);
+    // debug('若截取，得到的批号为', batNumber);
+
+    
     // debug('index is', index);
     // obj.SPPH = index >= 9 ? 
     //   // code.substring(2, index) + code.substring(index + 2) :

@@ -30,6 +30,8 @@ time.hour(0).minute(0).second(0).millisecond(0).date(time.date()+1);
 console.log(Date.parse(time));
 
 
+console.log( moment(1500000000000).format('YYYY/MM/DD'));
+
 // console.log(time.year() );
 
 

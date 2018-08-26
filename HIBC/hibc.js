@@ -11,7 +11,8 @@ const _ = require('lodash'),
     EmptyLinkCharacter: 7,
     InvalidQuantity: 8,
     InvalidMainCode: 9, // 主码格式不符合要求
-    InvalidAuxiliaryCode: 10 // 副码格式不符合要求
+    InvalidAuxiliaryCode: 10, // 副码格式不符合要求
+    CodeNotComplete: 11 // 条码不完整
   },
   type = {
     Concatenated: 1, // 主副码一起，以 '/'分隔
@@ -226,7 +227,7 @@ const parseAuxiliaryCode = (parseCode, t, code) => {
     checkCode(code, 6); // '+'号打头，长度需大于5位
     parseCode.date = moment(code.substring(0, 5), 'YYDDD');
     getLotSerialCheckLink(parseCode, code.substring(5), t, 'lot', false);
-  } else if (code.length > 2 && code.charAt(0) === '$' && !isNaN(code.charAt(1))) {
+  } else if (code.length > 2 && code.charAt(0) === '$' && code.charAt(1) !== '$' ) {
     getLotSerialCheckLink(parseCode, code.substring(1), t, 'lot', false);
   } else if (code.length > 3 && code.substring(0, 2) === '$+' && !isNaN(code.charAt(2))) {
     getLotSerialCheckLink(parseCode, code.substring(2), t, 'serial', false);
@@ -316,6 +317,10 @@ module.exports = arrOfCode => {
   // let batNumber = _.isUndefined(obj.SERIAL) ? obj.LOT : obj.SERIAL;
   // obj.SPPH = batNumber.replace(/[a-zA-Z]{1}\d{2}$/, '');
   handleSPPH(obj);
+
+  if (!obj.SPBH || !obj.SPPH) {
+    throw new Error(error.CodeNotComplete);
+  }
 
   debug('转换后结果如下：');
   debug(obj);

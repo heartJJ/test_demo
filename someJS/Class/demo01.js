@@ -12,6 +12,8 @@ class test {
   }
 };
 
+console.log(typeof test); // 类本质上还是一个function
+
 console.log(typeof test.prototype.constructor); // function
 
 console.log(test.prototype.constructor === test); // true
