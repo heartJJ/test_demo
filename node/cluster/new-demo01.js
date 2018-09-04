@@ -1,23 +1,26 @@
-var cluster = require('cluster');
-var numCPUs = 4;
-var v = 40;
+let cluster = require('cluster'),
+  numCPUs = require('os').cpus().length,
+  _ = require('lodash'),
+  v = 40,
+  start_time = Date.now();
+
 function fibo (n) {
   return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
 }
-console.time('8 cluster');
+// console.time('8 cluster');
 if (cluster.isMaster) {
   // Fork workers.
-  for (var i = 0; i < numCPUs; i++) {
+  for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
-  var i = 4;
+ 
   cluster.on('exit', function(worker, code, signal) {
-    if(!--i){
-      console.timeEnd('8 cluster');
+    if ( _.isEmpty(cluster.workers)) {
+      console.log(Date.now() - start_time);
       process.exit(0);
     }
   });
 } else {
-  console.log(fibo (v));
+  console.log(fibo(v));
   process.exit(0);
 }

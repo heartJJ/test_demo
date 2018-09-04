@@ -7,8 +7,6 @@ var cluster = require('cluster');
 var http = require('http');
 var numCPUs = require('os').cpus().length;
 
-let sum = 0;
-
 if (cluster.isMaster) {
   console.log('master start...');
 
@@ -26,9 +24,6 @@ if (cluster.isMaster) {
     // cluster.fork(); // 主进程不断重启子进程
   });
 } else {
-  sum ++;
-  console.log(sum);
-
   http.createServer(function(req, res) {
     console.log('现在是'+ process.pid + '正在工作');
     res.writeHead(200); 

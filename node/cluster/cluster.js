@@ -54,7 +54,7 @@ if (cluster.isMaster) {
   });
 
 } else if (cluster.isWorker) {
-  console.log('[worker] ' + 'start worker ...' + cluster.worker.id);
+  // console.log('[worker] ' + 'start worker ...' + cluster.worker.id);
 
   process.on('message', function(msg) {
     console.log('[worker] '+msg);
