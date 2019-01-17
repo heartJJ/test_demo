@@ -22,12 +22,14 @@ exports.pro = (knex) => {
       yield insert(knex, cluster.worker.id);
     }).then( () => {
       debug('插入成功');
+      process.exit();
     })
     .catch( err => {
       debug(err);
+      process.exit();
     });
 
-    process.exit();
+    
   }
 };
 
