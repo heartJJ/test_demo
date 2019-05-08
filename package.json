@@ -39,9 +39,12 @@
     "mysql": "^2.15.0",
     "nightmare": "^3.0.1",
     "node-arabic-number-to-rmb": "^1.0.2",
+    "node-rsa": "^1.0.5",
     "node-xlsx": "^0.7.4",
     "nodemailer": "^4.6.7",
     "pinyin": "^2.8.3",
+    "puppeteer": "^1.15.0",
+    "read_all_file": "^1.0.1",
     "request": "^2.87.0",
     "socket.io": "^1.7.2",
     "xlsx": "^0.11.15"
