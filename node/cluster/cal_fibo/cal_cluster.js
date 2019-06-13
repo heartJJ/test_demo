@@ -22,5 +22,5 @@ if (cluster.isMaster) {
   });
 } else {
   console.log(fibo(v));
-  process.exit(0);
+  process.exit(0);           
 }
