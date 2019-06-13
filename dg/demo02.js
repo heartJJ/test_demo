@@ -166,9 +166,9 @@ let doctor_arr = [
 
 const makeDepartmentTree = (start_arr, department_arr, doctor_arr, flag = true) => {
   start_arr.forEach(v => {
-    console.log('---------------------');
-    console.log(true);
-    start_arr.forEach(v => console.log(v));
+    // console.log('---------------------');
+    // console.log(true);
+    // start_arr.forEach(v => console.log(v));
     let child = flag ?
       department_arr.filter(r => r.belong === v.id && r.parent === 0) :
       department_arr.filter(r => r.parent === v.id);
@@ -183,3 +183,7 @@ const makeDepartmentTree = (start_arr, department_arr, doctor_arr, flag = true) 
 };
 
 makeDepartmentTree(start_arr, department_arr, doctor_arr);
+
+
+
+// console.log(start_arr);
