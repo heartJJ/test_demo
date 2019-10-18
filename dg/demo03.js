@@ -94,12 +94,12 @@ function makeArr (id, o = {}) {
 function toTreeData(pid){
  
   
-  // return tree(pid);  // 第一级节点的父id，是null或者0，视情况传入
-  return remove_tree(11);
+  return tree(pid);  // 第一级节点的父id，是null或者0，视情况传入
+  // return remove_tree(11);
 }
 
 
-// const result = toTreeData(0);
+const result = toTreeData(0);
 
 // result.forEach(v => {
 //   console.log(v);

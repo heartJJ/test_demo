@@ -6,7 +6,7 @@ function timeout(ms) {
 
 async function asyncPrint(value, ms) {
   await timeout(ms);
-  console.log(value)
+  console.log(value);
 }
 
 asyncPrint('hello world', 5000);

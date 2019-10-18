@@ -1,6 +1,7 @@
 // 关于 promise
 
 const co = require('co');
+const moment = require('moment');
 
 const test_promise = () => {
   return new Promise( (resolve, reject) => {
@@ -62,3 +63,8 @@ try {
   console.log( typeof error );
   console.log(error);
 }
+
+
+console.log(moment().format('YYYYMMDDHHmmss'));
+
+

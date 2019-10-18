@@ -46,7 +46,7 @@ const get = async () => {
     body: JSON.stringify(local_body)
   };
 
-  await requestApi(option);
+  return await requestApi(option);
 };  
 
 /**
@@ -164,6 +164,21 @@ const run = async () => {
 }
 
 
+const mget = async (ids) => {
+  const option = {
+    method: 'get',
+    url: 'http://127.0.0.1:9200/my-index/mytype/_mget?pretty',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ids})
+  };
+
+  await requestApi(option);
+}
+
+
+
 const main = async () => {
    // await create();
 
@@ -171,7 +186,12 @@ const main = async () => {
 
   // debug(chalk.yellow('******************'));
 
-  await get();
+  const { hits } = await get();
+  const ids = hits.hits.map(v => v._id);
+
+  debug('尝试mget请求');
+  debug(ids);
+  await mget(ids);
 }
 
 

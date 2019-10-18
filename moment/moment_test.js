@@ -25,10 +25,19 @@ const moment = require('moment');
 // console.log( moment(1500000000000).format('YYYY/MM/DD HH:mm:SS'));   // 2017/07/14 10:40:00
 
 
-console.log( moment().utcOffset(480)  );
+// console.log( moment().utcOffset(480)  );
 
-console.log( moment().utcOffset(480).valueOf()  );
+// console.log( moment().utcOffset(480).valueOf()  );
 
-console.log( moment() );
+// console.log( moment() );
 
-console.log( moment().valueOf() );
+// console.log( moment().valueOf() );
+
+const timezone = new Date().getTimezoneOffset();
+
+const str = moment(1561105500339 + (timezone + 480) * 60 * 1000 ).format('YYYY-MM-DD HH:mm:ss');
+
+console.log(str);
+
+
+console.log(moment(1561105500339).valueOf() );

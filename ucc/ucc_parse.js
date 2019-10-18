@@ -63,9 +63,9 @@ const getEnsureLength = (code, obj) => {
       if(code.length < 8) {
         obj.error = err.MistakeLengthOfEnsureAI;
       } else if(key === '11') {
-        obj.SCRQ = Date.parse(moment('20'.concat(code.substring(2, 8))));
+        obj.SCRQ = moment('20'.concat(code.substring(2, 8))).valueOf();
       } else if(key === '17') {
-        obj.YXQZ = Date.parse(moment('20'.concat(code.substring(2, 8))));
+        obj.YXQZ = moment('20'.concat(code.substring(2, 8))).valueOf();
       } else {
         obj[key] = code.substring(2, 8);
       }

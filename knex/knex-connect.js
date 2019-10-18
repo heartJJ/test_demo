@@ -13,8 +13,18 @@ const knex = Knex({
     password: '123456',
     database: 'hanjianjie'
   },
-  debug: true,
+  // debug: true,
   useNullAsDefault: true
+});
+
+
+knex.client.on('query-response', (response, obj, builder) => {
+  const sql = obj.bindings.reduce((pre, cur) => {
+    pre = pre.replace('?', cur);
+    return pre;
+  }, obj.sql);
+
+  console.log(sql);
 });
 
 module.exports = knex;
