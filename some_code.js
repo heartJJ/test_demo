@@ -3,6 +3,9 @@
 const co = require('co');
 const moment = require('moment');
 
+console.log(moment('2021-03-03 00:00:00.0').valueOf());
+
+
 const test_promise = () => {
   return new Promise( (resolve, reject) => {
     reject(123);
@@ -63,8 +66,5 @@ try {
   console.log( typeof error );
   console.log(error);
 }
-
-
-console.log(moment().format('YYYYMMDDHHmmss'));
 
 

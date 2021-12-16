@@ -1,14 +1,3 @@
-#ignore packages installed by npm
+.lowdefy/**
+.env
 node_modules
-.vscode
-code/
-#put any other files ou don't want to check in here
-#such as .DS_Store (OSX), *.bak, etc
-
-*.xlsx
-SQL
-
-auth.js
-
-.DS_Store
-yarn.lock

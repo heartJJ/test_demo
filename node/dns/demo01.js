@@ -46,9 +46,9 @@ dns.lookup('fgrid.io', (err, address, family) => {
 });
 
 
-dns.resolve('syx201502.com', 'A', function(e, r) {
-  if (e) {
-    console.log(e);
-  }
-  console.log(r);
-});
+// dns.resolve('syx201502.com', 'A', function(e, r) {
+//   if (e) {
+//     console.log(e);
+//   }
+//   console.log(r);
+// });

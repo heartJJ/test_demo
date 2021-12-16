@@ -186,4 +186,4 @@ makeDepartmentTree(start_arr, department_arr, doctor_arr);
 
 
 
-// console.log(start_arr);
+console.log(start_arr);

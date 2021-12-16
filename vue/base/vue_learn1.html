@@ -9,7 +9,7 @@
   <p>{{ message }}</p>
 </div>
 
-<!-- span 的 title 属性绑定 -->
+<!-- v-bind:title (简写为 :title)单向绑定，仅 data 变化 影响页面变化 -->
 <div id="app-2">
   <span v-bind:title="message">
     鼠标悬停几秒钟查看此处动态绑定的提示信息！
@@ -37,6 +37,7 @@
 </div>
 
 <!-- model 数据双向绑定 -->
+<!-- v-model 仅能使用在表单类元素中（即标签需存在 value 中） -->
 <div id="app-6">
   <p>{{ message }}</p>
   <input v-model="message">
@@ -61,8 +62,9 @@
 
 
 <script>
+Vue.config.productionTip = false; // 生产提示关闭
 let app = new Vue({
-  el: '#app',
+  el: '#app', // 等价写法 app.$amount('#app')， $amout 为 Vue 原型对象上的方法
   data: {
     message: 'Hello Vue!'
   }
@@ -70,9 +72,15 @@ let app = new Vue({
 
 let app2 = new Vue({
   el: '#app-2',
-  data: {
-    message: '页面加载于 ' + new Date().toLocaleString()
+  // data 最好写成函数式, 组件复用时，可避免数据被污染（因对象为引用）
+  data() { // this 指针指向 Vue 示例对象 (app2)，若写成 箭头函数，则 this 指向全局 window
+    return {
+      message: '页面加载于 ' + new Date().toLocaleString()
+    }
   }
+  /* data: {  
+    message: '页面加载于 ' + new Date().toLocaleString()
+  } */
 });
 
 let app3 = new Vue({

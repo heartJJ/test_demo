@@ -21,7 +21,7 @@ const requestApi = (option) => {
 
 const local_body = {
   'query': {
-    "match_all": {}
+    'match_all': {}
     // 'bool': {
     //   'filter': [
     //     { 'term': { 'published': true } },
@@ -96,10 +96,10 @@ const create = async () => {
  */
 const scroll_first = async () => {
   const body = {
-    "query": { "match_all": {}},
+    'query': { 'match_all': {}},
     'size': 7,
-    "sort": [
-      "_doc"
+    'sort': [
+      '_doc'
     ]
   };
   const url = 'http://127.0.0.1:9200/my-index/_search?scroll=1m';
@@ -120,8 +120,8 @@ const scroll_first = async () => {
  */
 const scroll = async (_scroll_id) => {
   const body = {
-    "scroll": "1m",
-    "scroll_id": _scroll_id,
+    'scroll': '1m',
+    'scroll_id': _scroll_id,
   };
   const url = 'http://127.0.0.1:9200/_search/scroll?';
   const option = {
@@ -140,7 +140,7 @@ const scroll = async (_scroll_id) => {
 let scroll_id, length = 0;
 const run = async () => {
   console.time('search');
-  debug(`scroll init....`);
+  debug('scroll init....');
   const { _scroll_id, hits } = await scroll_first();
 
   length = hits.hits.length;
@@ -158,10 +158,10 @@ const run = async () => {
     i++;
   }
 
-  debug(`arr 总数为: ${arr.length}`)
+  debug(`arr 总数为: ${arr.length}`);
 
   console.timeEnd('search');
-}
+};
 
 
 const mget = async (ids) => {
@@ -175,7 +175,7 @@ const mget = async (ids) => {
   };
 
   await requestApi(option);
-}
+};
 
 
 
@@ -192,10 +192,11 @@ const main = async () => {
   debug('尝试mget请求');
   debug(ids);
   await mget(ids);
-}
+};
 
 
 
 // run();
 
 main();
+

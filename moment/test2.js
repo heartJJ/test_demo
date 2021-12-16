@@ -33,6 +33,9 @@ console.log(new_year);
 
 // console.log(time.date());
 
+console.log(moment(1618565140405).format('YYYY-MM'));
 
 
+console.log(moment().startOf('day').format('X'));
 
+console.log( moment().startOf('day').valueOf());

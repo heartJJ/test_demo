@@ -37,7 +37,7 @@ const batchs = async () => {
 
 
 const trx_func = async () => {
-  const trx = await knex.transaction();
+  
   const arr = [
     { name: '20', age: 21 },
     { name: '21', age: 21 },
@@ -53,4 +53,7 @@ const trx_func = async () => {
 
 // batchs();
 
-trx_func();
+// trx_func();
+
+console.log(new Date().getTimezoneOffset());
+console.log(new Date(new Date().toLocaleDateString()).getTime());

@@ -1,5 +1,5 @@
 /**
- * isMainThread：false 表示当前为 worker 线程，false 表示为主线程
+ * isMainThread：false 表示当前为 worker 线程，true 表示为主线程
  * parentPort: 在 worker 线程里是表示父进程的 MessagePort 类型的对象，在主线程里为 null
  * workerData: 在 worker 线程里是父进程创建 worker 线程时的初始化数据，在主线程里是 undefined
  * threadId: 在 worker 线程里是线程 ID，在父进程里是 0。

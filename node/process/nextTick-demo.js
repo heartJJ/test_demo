@@ -1,3 +1,5 @@
+// 注意，在node 11 版本之后，事件循环的执行优先级改变，同游览器相近，故版本前后执行结果不同
+
 console.log('1');
 
 setTimeout(function() {

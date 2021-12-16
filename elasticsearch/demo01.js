@@ -4,7 +4,13 @@
 
 const { Client, errors } = require('es7');
 
-const client = new Client({ node: 'http://localhost:9200' });
+const client = new Client({
+  node: 'http://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+});
 
 // client.info(console.log);
 
@@ -30,21 +36,23 @@ const index = async () => {
 
 const search = async () => {
   const result = await client.search({
-    index: 'my-index',
-    type: 'mytype2' 
-  })
+    index: 'logstash*',
+    // type: 'mytype1' 
+  });
 
+  console.log(result);
+    
   result.body.hits.hits.forEach(v => console.log(v)  );
 };
 
 
 
 const main = async () => {
-  await index();
+  // await index();
 
   console.log('----------');
 
-  // await search();
+  await search();
 };
 
 

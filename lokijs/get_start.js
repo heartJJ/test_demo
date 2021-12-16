@@ -6,10 +6,9 @@ const users = db.addCollection('users');
 
 users.insert([{ name: 'Thor', age: 35 }, { name: 'Loki', age: 30 }]);
 
-const user1 = users.find({ age: { '$gte': 35 } });
+users.removeWhere({  name: 'Loki' });
 
-const user2 = users.chain().find().simplesort('name').data();
+const r = users.find({});
 
-console.log(user1);
 
-console.log(user2);
+console.log(r);

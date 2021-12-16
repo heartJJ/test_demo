@@ -27,14 +27,25 @@ let code_sp = new Map([
  */
 const supplementCode = (tm, obj) => {
   let index;
-  if(tm.length === 2) {
-    index = tm.findIndex(val => val.length === 13 );
-    if (index !== -1) {
-      tm[index] = '010'.concat(tm[index]);
-    } else {
-      index = tm.find(val => val.length === 17 );
-      if (index !== -1) tm[index] = '000'.concat(tm[index]);
+
+  const code_key = ['00', '01', '02', '10', '11', '13', '15', '17', '21', '30', '37', '240', '241', '250', '251'];
+  if (tm.length === 1) {
+    if (!code_key.some(v => tm[0].startsWith(v))) {
+      tm[0] = '010'.concat(tm[0]);
     }
+  }
+
+  if(tm.length === 2) {
+    index = tm.findIndex(val => val.length === 13);
+    if ( index !== -1 && !code_key.some(v => tm[index].startsWith(v)) ) {
+      tm[0] = '010'.concat(tm[index]);
+    }
+    // if (index !== -1) {
+    //   tm[index] = '010'.concat(tm[index]);
+    // } else {
+    //   index = tm.find(val => val.length === 17 );
+    //   if (index !== -1) tm[index] = '000'.concat(tm[index]);
+    // }
   }
   if(tm.length > 2) {
     obj.error.push(err.MistakeLengthOfArray);
@@ -106,7 +117,10 @@ const getEnsureLength = (code, obj) => {
  */
 const getUnensureLength = (code, obj) => {
   const index = code.indexOf(' ');
-  if(index !== -1) {
+
+  console.log('--------');
+  console.log(code.substring(index, index+2));
+  if(index !== -1 && code.substring(index, index+2) === '21' ) {
     const arr = code.split(' ');
     arr.forEach(val => {
       handleSpace(val, obj);
@@ -212,7 +226,7 @@ module.exports = (tm) => {
   const obj = {error : []};
   // 保留原始上传的条码
   obj.TM = tm.map(val => val);
-  // supplementCode(tm, obj);
+  supplementCode(tm, obj);
 
   // 查找主码，因条码可以乱序扫描
   const index = tm.findIndex(val =>  ['00', '01', '02'].includes(val.substring(0, 2)) );
