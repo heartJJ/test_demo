@@ -46,7 +46,7 @@
     "knex": "^0.16.3",
     "lokijs": "^1.5.7",
     "mathjs": "^4.4.2",
-    "mermaid": "^8.0.0-rc.8",
+    "mermaid": "^8.13.5",
     "moment": "^2.17.1",
     "mysql": "^2.15.0",
     "nightmare": "^3.0.1",
