@@ -43,7 +43,7 @@
     "iconv-lite": "^0.4.15",
     "inquirer": "^4.0.1",
     "ioredis": "^4.28.2",
-    "knex": "^0.16.3",
+    "knex": "^2.3.0",
     "lokijs": "^1.5.7",
     "mathjs": "^4.4.2",
     "mermaid": "^8.0.0-rc.8",
